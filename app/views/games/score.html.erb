@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <%= @new %>
+  <%= @score %>
+
+  <p>You typed:</p>
+  <%= @attempt %>
+
+  <p>Result:</p>
+  <%= @result[:message] %>
+
+  <%= link_to "Play New Game", new_path, class: "btn btn-success btn-block link" %>
+</div>

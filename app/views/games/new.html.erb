@@ -1,0 +1,11 @@
+<div class="wrapper">
+  <%= @letters %>
+  <p>What is the longest word you can find?</p>
+
+  <form action="/score" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <%= hidden_field_tag :letters, @letters %>
+      <%= hidden_field_tag :start_time, Time.now %>
+      <input type="text" name="word" class=form-control>
+      <input type="submit" class="btn btn-primary btn-block" input type="submit" value="Play">
+</div>
