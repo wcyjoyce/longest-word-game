@@ -2,11 +2,23 @@
   <%= @new %>
   <%= @score %>
 
-  <p>You typed:</p>
-  <%= @attempt %>
+  <div class="message width">
+    <p><%= @result[:message] %></p>
+  </div>
 
-  <p>Result:</p>
-  <%= @result[:message] %>
+  <div class="output width">
+    <div class="response">
+      <p>SCORE:</p>
+      <h4><%= @result[:score].round(0) %> points</h4>
+    </div>
 
-  <%= link_to "Play New Game", new_path, class: "btn btn-success btn-block link" %>
+    <div class="response">
+      <p>TIME TAKEN:</p>
+      <h4><%= @result[:time].round(2) %> seconds</h4>
+    </div>
+  </div>
+
+  <div class="width">
+    <%= link_to "Play New Game", new_path, class: "btn btn-default btn-block link" %>
+  </div>
 </div>

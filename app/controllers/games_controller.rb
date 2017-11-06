@@ -1,7 +1,8 @@
+require "open-uri"
+
 class GamesController < ApplicationController
   def new
-    @letters = Array.new(9) { ("A".."Z").to_a.sample }
-    # "9" is grid size (could be passed as additional argument)
+    @letters = Array.new(10) { ("A".."Z").to_a.sample }
   end
 
   def score
@@ -9,19 +10,15 @@ class GamesController < ApplicationController
     @letters = params[:letters]
     @start_time = DateTime.parse(params[:start_time])
     @end_time = Time.now
-
     @result = run_game(@attempt, @letters, @start_time, @end_time)
-    # raise
   end
 
   def run_game(attempt, grid, start_time, end_time)
     result = { time: end_time - start_time }
-
     score_and_message = score_and_message(attempt, grid, result[:time])
     result[:score] = score_and_message.first
     result[:message] = score_and_message.last
-
-  result
+    result
   end
 
   def included?(guess, grid)
@@ -31,7 +28,7 @@ class GamesController < ApplicationController
   def english_word?(word)
     response = open("https://wagon-dictionary.herokuapp.com/#{word}")
     json = JSON.parse(response.read)
-    return json['found']
+    return json["found"]
   end
 
   def compute_score(attempt, time_taken)
@@ -42,12 +39,12 @@ class GamesController < ApplicationController
     if included?(attempt.upcase, grid)
       if english_word?(attempt)
         score = compute_score(attempt, time)
-        [score, "well done"]
+        [score, "Good job! #{attempt.upcase} is an English word that can be spelt from the grid."]
       else
-        [0, "not an english word"]
+        [0, "#{attempt.upcase} is not an English word."]
       end
     else
-      [0, "not in the grid"]
+      [0, "#{attempt.upcase} cannot be spelt from the letters in the grid."]
     end
   end
 
